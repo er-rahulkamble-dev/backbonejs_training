@@ -55,3 +55,22 @@ song.get("pbulishYear");
 
 // To check the particular mode contains the specific attribute or not use below method:
 song.has("title");  // returns true or false
+
+
+// 13. lecture: validation 
+
+var Song13 = Backbone.Model.extend({
+    validate: function(attrs){
+        if(!attrs.title){
+            return "title is required."
+        }
+    }
+});
+
+var song13 = new Song13();
+
+//To get created object is valid or not we can call isValid() method
+song13.isValid();
+
+//To get last validation error message we can user validationError
+var lastError = song13.validationError;
