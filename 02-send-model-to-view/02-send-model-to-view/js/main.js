@@ -80,9 +80,29 @@ songs.add(song);
     // Create view of model
 
     var SongView = Backbone.View.extend({
+        events: {
+            "click": "onClick",  //handler, will render something defined on click event.
+            "click .bookmark": "onClickBookMark"
+        },
+
+        onClick: function(event){
+            $('#container').text(this.model.get('title') + ", Listen clicked.");  // this will write a text inside DOM element <div id= "container" ></>
+            console.log("listen clicked.");
+        },
+
+        onClickBookMark: function(event){
+            //event the argument is a standard JQuery event, which has a method called 
+            // stop propagation, which we can use to stop the event form being dispatched to any other
+            // handlers in the chain (like here we have Two handlers onClick, onClickBookMark and if u click on either of 
+            // handler then both handlers call at same time so to avoid this use below method) 
+            event.stopPropagation(); //check out by removing this line
+            //
+            $('#container').text(this.model.get('title') + ", bookmark clicked.");  // this will write a text inside DOM element <div id= "container" ></>
+            console.log("bookmark clicked.");
+        },
         tagName: "li",
         render: function(){
-            this.$el.html(this.model.get("title"));
+            this.$el.html(this.model.get("title") + "<button>Listen</button>  <button class = 'bookmark'>bookmark</button>");
             return this;
         }
     });
