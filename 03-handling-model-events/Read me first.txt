@@ -1,0 +1,110 @@
+Learn concept of 'change'
+
+Real-time notifications
+
+1. Polling (client keeps asking the server)
+2. Pushing (server tells the client)
+
+In real world applications, you find many instances of a model's state changing in real time.
+
+Take Facebook, for example.
+
+Have you noticed that when someone comments on your post or likes it, you would immediately see the
+
+result?
+
+You don't have to refresh the page to see the changes.
+
+So how does this work?
+
+There are two common ways to implement something like this.
+
+One way is to repeatedly ask the server if the state of a model is changed.
+
+But this can be costly as the application grows.
+
+There is another way, which is called push or push notifications in which the server notifies every
+
+client that's interested to know about the changes.
+
+Either way, the model that's residing on the client inside the user's browser is updated.
+
+At this point, we need to refresh the view based on the content of the model.
+
+Let's see this in action.
+
+Here I've got a basic view that renders the title of a song as well as the number of users listening
+
+to it now.
+
+Let's see this in Chrome.
+
+So no one is currently listening to this song.
+
+Now I'm going to use the console to simulate a situation where the number of listeners changes.
+
+So I'm going to update the state of the model by setting the listeners attribute.
+
+Note that the view is not refreshed.
+
+So we need to make the view, listen to the changes in the model and update itself accordingly.
+
+So let's go ahead and implement this.
+
+You have already seen the initialize method before.
+
+It's called when we Instantiate a Backbone object.
+
+Here we are using the on method to register a handler for the change event of the model.
+
+All backbone models publish a change event whenever one of their attributes is changed.
+
+Earlier I told you that backbone models store attributes in a hash, which is the reason why we have
+
+to use the get and set methods to work with the attributes of models.
+
+Backbone developers have used this technique so that they can keep track of changes in the attributes
+
+and publish events.
+
+If you set the attributes directly on a model, keeping track of changes would be hard or impossible.
+
+So here we are registering the render method as the callback when the change event is triggered.
+
+The third parameter is to set the context.
+
+We need to set the context to the view itself.
+
+When the render method is called.
+
+Otherwise the context would be set to the model.
+
+Now, let's see if it's working.
+
+So currently no one is listening to this song.
+
+Now is set the number of listeners behind the scene.
+
+There you go.
+
+The View updated immediately.
+
+Now.
+
+Food for thought.
+
+You don't always have to call the render method when the model state changes.
+
+Even though this is quite common, sometimes you may want to display a message somewhere else or apply
+
+some CSS class to an element to highlight some fact to the user.
+
+In that case, you would create a separate callback function like on model change.
+
+So to handle model events, we use the on method to register handlers for them.
+
+Backbone models raise a change event when the state of a model is changed.
+
+In the next lecture, we'll cover how to respond to the events raised by Backbone collections.
+
+Thank you for watching.
