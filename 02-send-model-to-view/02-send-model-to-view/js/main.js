@@ -93,11 +93,32 @@ songs.add(song);
     // Create view of Collection
     var SongsView = Backbone.View.extend({
         render: function () {
+
+  
+
+            //Below this.model refer as a collection songs send while instantiating
+            // where underscore library's method each iterate over collection
+            // at every iteration function(song) is executed with the song referring 
+            // to the current song
+
+            //We simply put that song in a song view, render it, and append it to the DOM element of our songs view
+            // So the collection views are responsible for delagting the render to the model views.
+            // They just iterate the collection and create a child view for each model inside the collection
+
+            // there is a problem when you don't maintain a separate var for 'this' 
+            // if you are javascript ninja then you should know that this code is going to throw an error.
+            // Why?
+            // Because the context of 'this' changes here inside this callback function.
+            //We want this to refer to the view iteslf.
+
+            // A common convention is to keep a copy of this and store it in a variable called self.
+            // 
             var self = this;
             this.model.each(function(song){
                 var songView = new SongView({ model: song });
                 self.$el.append(songView.render().$el);
             });
+
         }
     });
 
